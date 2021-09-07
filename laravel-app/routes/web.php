@@ -17,6 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->group('/dashboard', function () {
+    Route::get('/dashboard',[StarsController::class,'index'])->name('dashboard');
+
+    Route::get('/star',[StarsController::class,'add']);
+    Route::post('/star',[StarsController::class,'create']);
+
+    Route::get('/star/{star}',[StarsController::class,'edit']);
+    Route::post('/star/{star}',[StarsController::class,'update']);
+
+});
